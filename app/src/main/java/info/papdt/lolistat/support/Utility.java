@@ -7,13 +7,21 @@ import android.graphics.Color;
 
 public class Utility
 {
-	public static int getStatusBarHeight(Context context) { 
-		int result = 0;
-		int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
-		if (resourceId > 0) {
-			result = context.getResources().getDimensionPixelSize(resourceId);
-		}
-		return result;
+    private static int getBarsHeight(Context context, String name, String type, String pkgName) {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier(name, type, pkgName);
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
+	public static int getStatusBarHeight(Context context) {
+		return getBarsHeight(context, "status_bar_height", "dimen", "android");
+	}
+
+	public static int getNavigationBarHeight(Context context) {
+        return getBarsHeight(context, "navigation_bar_height", "dimen", "android");
 	}
 	
 	public static int darkenColor(int color, float factor) {
@@ -61,10 +69,6 @@ public class Utility
 	
 	public static boolean isLauncher(Context context, String packageName) {
 		ActivityInfo homeInfo = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME).resolveActivityInfo(context.getPackageManager(), 0);
-		if (homeInfo != null) {
-			return homeInfo.packageName.equals(packageName);
-		} else {
-			return false;
-		}
+		return homeInfo != null && homeInfo.packageName.equals(packageName);
 	}
 }

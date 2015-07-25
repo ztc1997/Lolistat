@@ -4,8 +4,8 @@
     <string name="app_name">萝莉状态栏</string>
 
 	<!-- Settings -->
-	<string name="tint_navigation">导航栏变色</string>
-	<string name="tint_icons">状态栏图标洗白白</string>
+	<string name="tint_navigation">导航栏跟随状态栏颜色</string>
+	<string name="tint_icons">状态栏图标变色</string>
 	<string name="blacklist">黑名单</string>
 	<string name="blacklist_sum">对某些app禁用萝莉状态栏</string>
 	<string name="about">关于</string>
@@ -28,5 +28,10 @@
 	<!-- Messages -->
 	<string name="plz_wait">请稍候...</string>
 	<string name="save">保存</string>
+	<string name="tint_mode">变色模式</string>
+	<string name="tint_mode_classic">经典</string>
+	<string name="tint_mode_disabled">禁用</string>
+	<string name="tint_mode_full_tinted">完全变色</string>
+	<string name="global">全局（可被覆盖）</string>
 
 </resources>
