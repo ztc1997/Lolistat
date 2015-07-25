@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	
-	<SwitchPreference
-		android:key="enabled"
-		android:title="@string/enabled"
-		android:checked="true"/>
+	<ListPreference
+		android:key="tint_mode"
+		android:title="@string/tint_mode"
+        android:entries="@array/tint_mode_entries"
+        android:entryValues="@array/tint_mode_entry_values"
+		android:defaultValue="1"/>
 	
 	<CheckBoxPreference
 		android:key="tint_navigation"
 		android:title="@string/tint_navigation"
-		android:checked="true"
-		android:dependency="enabled"/>
+		android:checked="true"/>
 	
 	<CheckBoxPreference
 		android:key="tint_icons"
 		android:title="@string/tint_icons"
-		android:checked="true"
-		android:dependency="enabled"/>
+		android:checked="true"/>
 	
 	<EditTextPreference
 		android:key="custom_color"
-		android:title="@string/custom_color"
-		android:dependency="enabled"/>
+		android:title="@string/custom_color"/>
 	
 </PreferenceScreen>

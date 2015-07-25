@@ -2,29 +2,27 @@ package info.papdt.lolistat.ui.app;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Build;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.SwitchPreference;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import info.papdt.lolistat.R;
 import info.papdt.lolistat.support.Settings;
 import info.papdt.lolistat.ui.base.BasePreferenceFragment;
-import static info.papdt.lolistat.ui.utils.UiUtility.*;
+
+import static info.papdt.lolistat.ui.utils.UiUtility.$;
 
 public class SettingsFragment extends BasePreferenceFragment
 {
 	private Settings mSettings;
 	
-	private SwitchPreference mEnable;
+	private ListPreference mTintMode;
 	private CheckBoxPreference mNav, mStatus;
 	private EditTextPreference mColor;
 	
@@ -42,7 +40,7 @@ public class SettingsFragment extends BasePreferenceFragment
 		mSettings = Settings.getInstance(getActivity());
 		
 		// Obtain preferences
-		mEnable = $(this, Settings.ENABLED);
+		mTintMode = $(this, Settings.TINT_MODE);
 		mNav = $(this, Settings.TINT_NAVIGATION);
 		mStatus = $(this, Settings.TINT_ICONS);
 		mColor = $(this, Settings.CUSTOM_COLOR);
@@ -51,14 +49,17 @@ public class SettingsFragment extends BasePreferenceFragment
 		reload();
 		
 		// Bind
-		$$(mEnable, mNav, mStatus, mColor);
+		$$(mTintMode, mNav, mStatus, mColor);
 	}
 
 	@Override
     @SuppressWarnings("unchecked")
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
-		if (preference == mEnable) {
-			putBoolean(Settings.ENABLED, (Boolean) newValue);
+		if (preference == mTintMode) {
+            int value = Integer.parseInt((String) newValue);
+			putInt(Settings.TINT_MODE, value);
+            String[] entries = getActivity().getResources().getStringArray(R.array.tint_mode_entries);
+            mTintMode.setSummary(entries[value]);
 			return true;
 		} else if (preference == mNav) {
 			putBoolean(Settings.TINT_NAVIGATION, (Boolean) newValue);
@@ -89,8 +90,8 @@ public class SettingsFragment extends BasePreferenceFragment
 				return super.onOptionsItemSelected(item);
 		}
 	}
-	
-	private void initPackage() {
+
+    private void initPackage() {
 		String[] str = getExtraPass().split(",");
 		mPackageName = str[0];
 		mClassName = str[1];
@@ -104,7 +105,7 @@ public class SettingsFragment extends BasePreferenceFragment
 	}
 	
 	private void reload() {
-		mEnable.setChecked(getBoolean(Settings.ENABLED, true));
+		mTintMode.setSummary(mTintMode.getEntry());
 		mColor.setText(String.format("#%06X", 0xFFFFFF & getInt(Settings.CUSTOM_COLOR, 0)));
 
 		if (!mPackageName.equals("global") || !mClassName.equals("global")) {

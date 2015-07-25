@@ -7,8 +7,8 @@
 	<string name="global">Global (Can be overridden)</string>
 	<string name="global_short">Global</string>
 	<string name="search">Search</string>
-	<string name="enabled">Enabled</string>
-	<string name="tint_navigation">Tint Navigation Bar</string>
+	<string name="tint_mode">Tint Mode</string>
+	<string name="tint_navigation">Navigation Bar follow the Color of Status Bar</string>
 	<string name="tint_icons">Tint Notification Icons</string>
 	<string name="custom_color">Custom status bar color</string>
 	<string name="about">About</string>
@@ -33,5 +33,10 @@
 	<string name="save">Save</string>
 	<string name="reset">Reset</string>
 	<string name="reset_confirm">Confirm reset?</string>
+
+    <!-- Tint Mode -->
+    <string name="tint_mode_disabled">Disabled</string>
+    <string name="tint_mode_classic">Classic</string>
+    <string name="tint_mode_full_tinted">Full Tinted</string>
 
 </resources>

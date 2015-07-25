@@ -12,20 +12,24 @@ public abstract class Settings
 {
 	private static final String TAG = Settings.class.getSimpleName();
 	
-	public static final String ENABLED = "enabled";
+	public static final String TINT_MODE = "tint_mode";
 	public static final String TINT_NAVIGATION = "tint_navigation";
 	public static final String TINT_ICONS = "tint_icons";
 	public static final String CUSTOM_COLOR = "custom_color";
+
+    public static final int TINT_MODE_DISABLED = 0;
+    public static final int TINT_MODE_CLASSIC = 1;
+    public static final int TINT_MODE_FULL_TINTED = 2;
 	
 	private static final String PREF = "pref";
 	private static final String GLOBAL = "global";
 
 	// A list of the existing settings keys. Needed for resetting.
 	private static final String[] KEYS = {
-		ENABLED,
-		TINT_NAVIGATION,
-		TINT_ICONS,
-		CUSTOM_COLOR
+        TINT_MODE,
+        TINT_NAVIGATION,
+        TINT_ICONS,
+        CUSTOM_COLOR
 	};
 
 	private static XSettings sXSettings;
@@ -131,7 +135,7 @@ public abstract class Settings
 			return mPref.getInt(fallback(packageName, className, key), defValue);
 		}
 
-		@Override
+        @Override
 		public void putBoolean(String packageName, String className, String key, boolean value) {
 			throwException();
 		}
@@ -141,7 +145,7 @@ public abstract class Settings
 			throwException();
 		}
 
-		private void throwException() {
+        private void throwException() {
 			throw new RuntimeException(new IllegalAccessException("Cannot access editor with XSettings"));
 		}
 	}
@@ -155,7 +159,7 @@ public abstract class Settings
 
 		@Override
 		public void remove(String packageName, String className, String key) {
-			mPref.edit().remove(buildKey(packageName, className, key)).commit();
+			mPref.edit().remove(buildKey(packageName, className, key)).apply();
 		}
 
 		@Override
@@ -175,13 +179,13 @@ public abstract class Settings
 
 		@Override
 		public void putBoolean(String packageName, String className, String key, boolean value) {
-			mPref.edit().putBoolean(buildKey(packageName, className, key), value).commit();
+			mPref.edit().putBoolean(buildKey(packageName, className, key), value).apply();
 		}
 
 		@Override
 		public void putInt(String packageName, String className, String key, int value) {
-			mPref.edit().putInt(buildKey(packageName, className, key), value).commit();
+			mPref.edit().putInt(buildKey(packageName, className, key), value).apply();
 		}
-	}
+    }
 	
 }

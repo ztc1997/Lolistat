@@ -11,7 +11,6 @@ import java.util.List;
 import info.papdt.lolistat.R;
 import info.papdt.lolistat.ui.adapter.ActivityAdapter;
 import info.papdt.lolistat.ui.base.BaseListFragment;
-import info.papdt.lolistat.ui.base.GlobalActivity;
 import info.papdt.lolistat.ui.model.ActivityModel;
 
 public class PerActivityFragment extends BaseListFragment<ActivityModel>
