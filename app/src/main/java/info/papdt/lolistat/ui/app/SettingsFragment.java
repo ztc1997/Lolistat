@@ -105,6 +105,7 @@ public class SettingsFragment extends BasePreferenceFragment
 	}
 	
 	private void reload() {
+		mTintMode.setValue(String.valueOf(getInt(Settings.TINT_MODE, Settings.TINT_MODE_CLASSIC)));
 		mTintMode.setSummary(mTintMode.getEntry());
 		mColor.setText(String.format("#%06X", 0xFFFFFF & getInt(Settings.CUSTOM_COLOR, 0)));
 
