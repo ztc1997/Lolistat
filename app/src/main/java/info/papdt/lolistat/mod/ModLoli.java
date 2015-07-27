@@ -116,7 +116,7 @@ public class ModLoli implements IXposedHookLoadPackage, IXposedHookZygoteInit
 				a.recycle();
 
 				if (tintMode == Settings.TINT_MODE_CLASSIC && (colorPrimaryDark != Color.TRANSPARENT
-                        || colorPrimaryDark != Color.BLACK || translucentStatus)) return;
+                        && colorPrimaryDark != Color.BLACK || translucentStatus)) return;
 
 				final Window window = activity.getWindow();
 				int flags = window.getAttributes().flags;
