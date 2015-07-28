@@ -234,6 +234,7 @@ public class ModLoli implements IXposedHookLoadPackage, IXposedHookZygoteInit
                     String className = activity.getClass().getName();
                     int tintMode = mSettings.getInt(packageName, className, Settings.TINT_MODE, Settings.TINT_MODE_CLASSIC);
                     boolean shouldBlackenBtn = false;
+					boolean shouldBlackenIcon = false;
 					
 					if (activity.getActionBar() != null && !activity.getActionBar().isShowing()) return;
 					
@@ -308,13 +309,15 @@ public class ModLoli implements IXposedHookLoadPackage, IXposedHookZygoteInit
                             int navigationColor5 = newBitmap.getPixel(width / 4 * 3, navigationHeight);
                             int navigationColor = Utility.colorAverage(navigationColor1,
                                     navigationColor2, navigationColor3, navigationColor4, navigationColor5);
-                            Integer navigationColorLast = (Integer) XposedHelpers.getAdditionalInstanceField(mhparams.thisObject, "lastNavigationColor");
+							Integer navigationColorLast = (Integer) XposedHelpers.getAdditionalInstanceField(mhparams.thisObject, "lastNavigationColor");
+							if (navigationColorLast == null || navigationColor != navigationColorLast) {
+								window.setNavigationBarColor(navigationColor);
+								XposedHelpers.setAdditionalInstanceField(mhparams.thisObject, "lastNavigationColor", navigationColor);
+							}
+							shouldBlackenIcon = (Color.red(color) + Color.green(color) + Color.blue(color)) > BLACKEN_THRESHOLD;
+							XposedHelpers.setAdditionalInstanceField(activity, "shouldBlackenIcon", shouldBlackenIcon);
                             shouldBlackenBtn = (Color.red(navigationColor) + Color.green(navigationColor) + Color.blue(navigationColor)) > BLACKEN_THRESHOLD;
                             XposedHelpers.setAdditionalInstanceField(activity, "shouldBlackenBtn", shouldBlackenBtn);
-                            if (navigationColorLast == null || navigationColor != navigationColorLast) {
-                                window.setNavigationBarColor(navigationColor);
-                                XposedHelpers.setAdditionalInstanceField(mhparams.thisObject, "lastNavigationColor", navigationColor);
-                            }
                             break;
                     }
 
@@ -331,8 +334,6 @@ public class ModLoli implements IXposedHookLoadPackage, IXposedHookZygoteInit
 					// We must mask the view as dirty, or we will never see it flush
 					v.invalidate();
 
-                    boolean shouldBlackenIcon = (Color.red(color) + Color.green(color) + Color.blue(color)) > BLACKEN_THRESHOLD;
-                    XposedHelpers.setAdditionalInstanceField(activity, "shouldBlackenIcon", shouldBlackenIcon);
                     sendShouldBlackenIntent(activity, shouldBlackenIcon, shouldBlackenBtn);
                 }
             }
