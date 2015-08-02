@@ -117,7 +117,7 @@ public class ModSystemUI
                 Boolean isBtn = (Boolean) XposedHelpers.getAdditionalInstanceField(param.thisObject, "isBtn");
                 if (isBtn != null && isBtn) {
                     Drawable d = ((ImageView) param.thisObject).getDrawable();
-                    d.setColorFilter(shouldBlackenBtns ? Color.BLACK : Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+                    d.setColorFilter(shouldBlackenBtns ? Color.BLACK : Color.TRANSPARENT, PorterDuff.Mode.SRC_ATOP);
                 }
             }
         });
@@ -206,7 +206,7 @@ public class ModSystemUI
                     if (imageView != null) {
                         Drawable drawable = imageView.getDrawable();
                         if (drawable != null)
-                            drawable.setColorFilter(shouldBlackenBtns ? Color.BLACK : Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+                            drawable.setColorFilter(shouldBlackenBtns ? Color.BLACK : Color.TRANSPARENT, PorterDuff.Mode.SRC_ATOP);
                     }
                 }
             }
